@@ -13,7 +13,8 @@ class AuthService
     public function signup(Request $request)
     {
         User::query()->create([
-            'fullName' => $request->get('fullName'),
+            'name' => $request->get('name'),
+            'lastName' => $request->get('lastName'),
             'email' => $request->get('email'),
             'phone' => $request->get('phone'),
             'password' => bcrypt($request->get('password')),

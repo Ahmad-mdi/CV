@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\auth;
+namespace App\Http\Requests\profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SignupRequest extends FormRequest
+class ProfileEditRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class SignupRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -23,12 +23,14 @@ class SignupRequest extends FormRequest
      */
     public function rules()
     {
+        $user_id = auth()->user()->id;
         return [
             'name' => 'required',
             'lastName' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'required|min:11|max:11|unique:users,phone',
-            'password' => 'required|min:6|max:20',
+            'email' => 'required|email|unique:users,email,'.$user_id,
+            'phone' => 'required|min:11|max:11|unique:users,phone,'.$user_id,
+            'address' => 'min:4|max:250',
+            'about' => 'min:4|max:1500',
         ];
     }
 }
